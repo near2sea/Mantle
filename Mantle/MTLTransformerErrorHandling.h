@@ -46,6 +46,10 @@ extern NSString * const MTLTransformerErrorHandlingInputValueErrorKey;
 
 @optional
 
+// 添加转换方法加入父类json
+- (id)transformedWithParent:(id)parentJSON value:(id)value success:(BOOL *)success error:(NSError **)error;
+
+
 /// Reverse-transforms a value, returning any error that occurred during
 /// transformation.
 ///

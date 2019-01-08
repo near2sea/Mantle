@@ -319,7 +319,13 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 				// dictionary we're going to insert into.
 				if ([value isEqual:NSNull.null]) value = nil;
 
-				if ([transformer respondsToSelector:@selector(transformedValue:success:error:)]) {
+				if ([transformer respondsToSelector:@selector(transformedWithParent:value:success:error:)]) {
+					id<MTLTransformerErrorHandling> errorHandlingTransformer = (id)transformer;
+					BOOL success = YES;
+					value = [errorHandlingTransformer transformedWithParent:JSONDictionary value:value success:&success error:error];
+					
+					if (!success) return nil;
+				} else if ([transformer respondsToSelector:@selector(transformedValue:success:error:)]) {
 					id<MTLTransformerErrorHandling> errorHandlingTransformer = (id)transformer;
 
 					BOOL success = YES;
