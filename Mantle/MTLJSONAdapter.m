@@ -233,9 +233,11 @@ NSString * const MTLJSONAdapterThrownExceptionErrorKey = @"MTLJSONAdapterThrownE
 		};
 
 		if ([JSONKeyPaths isKindOfClass:NSString.class]) {
-			createComponents(JSONDictionary, JSONKeyPaths);
-
-			[JSONDictionary setValue:value forKeyPath:JSONKeyPaths];
+			if (value && value != NSNull.null) {
+				createComponents(JSONDictionary, JSONKeyPaths);
+				
+				[JSONDictionary setValue:value forKeyPath:JSONKeyPaths];
+			}
 		}
 
 		if ([JSONKeyPaths isKindOfClass:NSArray.class]) {
